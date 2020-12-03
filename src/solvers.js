@@ -24,8 +24,14 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
-
+  if ( n === 0) {
+    return 1;
+  }
+  var factorial = function(n) {
+    if ( n === 0) { return 1; }
+    return n * factorial(n - 1);
+  };
+  var solutionCount = factorial(n);
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
@@ -42,37 +48,29 @@ window.findNQueensSolution = function(n) {
 window.countNQueensSolutions = function(n) {
   var solutionCount = 0;
   if (n === 0) { return 1; }
-  // create a board n by n
+
   var board = new Board({n: n});
-  // create a inner recursive function that a paramater for row index starting at zero
+
   var checkMoves = function(rowIndex) {
-    // create var for the specific row
+
     var row = board.get(rowIndex);
-    // iterate over that row
     for ( let i = 0; i < row.length; i++) {
-      //   place a piece on col zero of the row - board.togglePiece(rowIndex, i);
       board.togglePiece(rowIndex, i);
-      //   check to see if there's conflict using a helper function
-      //     if there's a conflict, toggle off! - board.togglePiece(rowIndex, i);
       if (board.hasAnyQueensConflicts()) {
         board.togglePiece(rowIndex, i);
       } else {
-        //   if no conflict, compare rowIndex to n-1. Toggle piece off and increment the counter if it's the last row
-        //   if rowIndex does not equal n-1, call inner recursive function with rowIndex+1
         if (rowIndex === (n - 1)) {
           board.togglePiece(rowIndex, i);
           solutionCount++;
+          return;
         } else {
           checkMoves(rowIndex + 1);
           board.togglePiece(rowIndex, i);
-          return;
         }
       }
-
     }
   };
   checkMoves(0);
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
-  // debugger;
   return solutionCount;
 };

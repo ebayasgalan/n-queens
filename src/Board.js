@@ -141,7 +141,7 @@
       var numRows = this.get('n');
       var piecesInDiagonal = 0;
       var rowIndex = 0;
-      for (let i = colId; i < (numCols - colId); i++) {
+      for (let i = colId; i < numCols; i++) {
         var row = this.get(rowIndex);
         if (row && row[i] === 1) {
           piecesInDiagonal++;
