@@ -62,7 +62,7 @@
     },
 
 
-/*
+    /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
     / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
@@ -79,12 +79,24 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var row = this.get(rowIndex);
+      var piecesInRow = 0;
+      row.forEach(value => {
+        if (value === 1) {
+          piecesInRow++;
+        }
+      });
+      return piecesInRow > 1;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      var numRows = this.get('n');
+      var endResult = false;
+      for (let i = 0; i < numRows; i++) {
+        endResult = endResult || this.hasRowConflictAt(i);
+      }
+      return endResult;
     },
 
 
@@ -94,21 +106,37 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      var numRows = this.get('n');
+      var column = [];
+      var piecesInCol = 0;
+      for (let i = 0; i < numRows; i++) {
+        var row = this.get(i);
+        column.push(row[colIndex]);
+      }
+      column.forEach(value => {
+        if (value === 1) {
+          piecesInCol++;
+        }
+      });
+      return piecesInCol > 1;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      var numColumns = this.get('n');
+      var endResult = false;
+      for (let i = 0; i < numColumns; i++) {
+        endResult = endResult || this.hasColConflictAt(i);
+      }
+      return endResult;
     },
-
-
 
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+
       return false; // fixme
     },
 
